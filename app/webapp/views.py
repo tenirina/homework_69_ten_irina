@@ -14,12 +14,11 @@ def add_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             add = number_a + number_b
-            response = JsonResponse({'answer': add})
-            response.status_code = 200
+            response = JsonResponse({'answer': add, 'error': ''})
         except ValueError:
             response_data = {'error': 'Incorrect number format!'}
             response = JsonResponse(response_data)
-            response.status_code = 400
+        response.status_code = 200
         return response
 
 
@@ -31,13 +30,11 @@ def subtract_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             subtract = number_a - number_b
-            response = JsonResponse({'answer': subtract})
-            print(response)
-            response.status_code = 200
+            response = JsonResponse({'answer': subtract, 'error': ''})
         except ValueError:
             response_data = {'error': 'Incorrect number format!'}
             response = JsonResponse(response_data)
-            response.status_code = 400
+        response.status_code = 200
         return response
 
 
@@ -49,13 +46,11 @@ def multiply_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             multiply = number_a * number_b
-            response = JsonResponse({'answer': multiply})
-            print(response)
-            response.status_code = 200
+            response = JsonResponse({'answer': multiply, 'error': ''})
         except ValueError:
             response_data = {'error': 'Incorrect number format!'}
             response = JsonResponse(response_data)
-            response.status_code = 400
+        response.status_code = 200
         return response
 
 
@@ -67,17 +62,14 @@ def divide_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             divide = number_a / number_b
-            response = JsonResponse({'answer': divide})
-            print(response)
-            response.status_code = 200
+            response = JsonResponse({'answer': divide, 'error': ''})
         except ValueError:
             response_data = {'error': 'Incorrect number format!'}
             response = JsonResponse(response_data)
-            response.status_code = 400
         except ZeroDivisionError:
             response_data = {'error': 'Division by zero!'}
             response = JsonResponse(response_data)
-            response.status_code = 400
+        response.status_code = 200
         return response
 
 

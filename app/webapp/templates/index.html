@@ -35,14 +35,22 @@
       let answer = $('#answer');
       let urlBase = 'http://localhost:8000/'
 
-      console.log(answer)
-
+     
       renderResults = function(data){
         let answer_container = $('#answer');
         answer_container.empty();
         let answer = document.createElement('p');
-        answer.innerText = `${data.answer}`;
-        answer_container.append(answer);
+        console.log(data.status_code)
+        if(`${data.error}` === ''){
+          answer.innerText = `${data.answer}`;
+          answer.style.color = 'green'
+          answer_container.append(answer);
+        }
+        else{
+          answer.innerText = `${data.error}`;
+          answer.style.color = 'red'
+          answer_container.append(answer);
+        }
       }
 
       function onClick(event){
@@ -65,12 +73,11 @@
           case 'divide':
             url = urlBase + 'divide/'; 
             break
-        }      
-        
+        }              
         $.ajax({
           url: url,
           method: 'POST',
-          data: data
+          data: data,
         }).done(
           function (data){
               renderResults(data);
