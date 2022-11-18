@@ -1,9 +1,12 @@
 
 import json
 from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.views.generic import TemplateView
 
 
+@csrf_exempt
 def add_view(request, *args, **kwargs):
     if request.method == 'POST' and request.body:
         try:
@@ -11,8 +14,7 @@ def add_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             add = number_a + number_b
-            response = JsonResponse({'add': add})
-            print(response)
+            response = JsonResponse({'answer': add})
             response.status_code = 200
         except ValueError:
             response_data = {'error': 'Incorrect number format!'}
@@ -28,7 +30,7 @@ def subtract_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             subtract = number_a - number_b
-            response = JsonResponse({'subtract': subtract})
+            response = JsonResponse({'answer': subtract})
             print(response)
             response.status_code = 200
         except ValueError:
@@ -45,7 +47,7 @@ def multiply_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             multiply = number_a * number_b
-            response = JsonResponse({'multiply': multiply})
+            response = JsonResponse({'answer': multiply})
             print(response)
             response.status_code = 200
         except ValueError:
@@ -62,7 +64,7 @@ def divide_view(request, *args, **kwargs):
             number_a = int(num['A'])
             number_b = int(num['B'])
             divide = number_a / number_b
-            response = JsonResponse({'divide': divide})
+            response = JsonResponse({'answer': divide})
             print(response)
             response.status_code = 200
         except ValueError:
@@ -74,6 +76,10 @@ def divide_view(request, *args, **kwargs):
             response = JsonResponse(response_data)
             response.status_code = 400
         return response
+
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
 @ensure_csrf_cookie
