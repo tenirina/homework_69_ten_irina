@@ -23,6 +23,7 @@ def add_view(request, *args, **kwargs):
         return response
 
 
+@csrf_exempt
 def subtract_view(request, *args, **kwargs):
     if request.method == 'POST' and request.body:
         try:
@@ -40,6 +41,7 @@ def subtract_view(request, *args, **kwargs):
         return response
 
 
+@csrf_exempt
 def multiply_view(request, *args, **kwargs):
     if request.method == 'POST' and request.body:
         try:
@@ -57,6 +59,7 @@ def multiply_view(request, *args, **kwargs):
         return response
 
 
+@csrf_exempt
 def divide_view(request, *args, **kwargs):
     if request.method == 'POST' and request.body:
         try:

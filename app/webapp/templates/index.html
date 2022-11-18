@@ -19,10 +19,10 @@
           <input type="text" class="form-control" id="numberB" required>
         </div>
         <div class="d-grid gap-2 d-md-block">
-          <button id='add' class="btn btn-outline-secondary" data-counter type="submit">Add</button>
-          <button class="btn btn-outline-secondary" type="submit">Subtract</button>
-          <button class="btn btn-outline-secondary" type="submit">Multiply</button>
-          <button class="btn btn-outline-secondary" type="submit">Divide</button>
+          <button id='add' class="btn btn-outline-secondary " type="submit">Add</button>
+          <button id='subtract' class="btn btn-outline-secondary" type="submit">Subtract</button>
+          <button id='multiply' class="btn btn-outline-secondary" type="submit">Multiply</button>
+          <button id='divide' class="btn btn-outline-secondary" type="submit">Divide</button>
         </div>
         <h4> Resault </h4>
         <div id="answer" class="col-md-3">
@@ -33,7 +33,7 @@
 
     <script>
       let answer = $('#answer');
-      let url = 'http://localhost:8000/'
+      let urlBase = 'http://localhost:8000/'
 
       console.log(answer)
 
@@ -45,15 +45,28 @@
         answer_container.append(answer);
       }
 
-      function onClickAdd(event){          
+      function onClick(event){
+        url = urlBase
         event.preventDefault();        
         let numA = document.getElementById('numberA').value;
         let numB = document.getElementById('numberB').value;
         data = JSON.stringify({'A': numA, 'B': numB});
-        if (event.target.dataset.counter != undefined) { 
-          console.log(event.target.dataset)
-        }  
-        url += 'add/'
+        move = event.target.id;
+        switch (move) {
+          case 'add':
+            url = urlBase + 'add/';
+            break
+          case 'subtract': 
+            url = urlBase + 'subtract/';
+            break
+          case 'multiply':
+            url = urlBase + 'multiply/';
+            break
+          case 'divide':
+            url = urlBase + 'divide/'; 
+            break
+        }      
+        
         $.ajax({
           url: url,
           method: 'POST',
@@ -65,17 +78,15 @@
       )  
       }     
 
+      let add_but = document.getElementById('add');
+      add_but.onclick = onClick;
+      let subtract_but = document.getElementById('subtract');
+      subtract_but.onclick = onClick;
+      let multiply_but = document.getElementById('multiply');
+      multiply_but.onclick = onClick;
+      let divide_but = document.getElementById('divide');
+      divide_but.onclick = onClick;
 
-      document.querySelector('.parent').addEventListener('click',function(e){
-          if (e.target.classList.contains('myclass')) alert("Я " + e.target.innerText)
-})
-
-
-
-      let but = document.getElementsByClassName('btn');
-
-      add_but.onclick = onClickAdd;         
-             
     </script>
   </body>
 </html>
