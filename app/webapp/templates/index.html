@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Task 2</title>
+  </head>
+  <body>
+    <div class="container">
+      <form class="row g-3" method="post">
+        {% csrf_token %}
+        <div class="col-md-4">
+          <label for="numberA" class="form-label">Number A</label>
+          <input type="text" class="form-control" id="numberA" required>
+        </div>
+        <div class="col-md-4">
+          <label for="numberB" class="form-label">Number B</label>
+          <input type="text" class="form-control" id="numberB" required>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+          <button id='add' class="btn btn-outline-secondary" data-counter type="submit">Add</button>
+          <button class="btn btn-outline-secondary" type="submit">Subtract</button>
+          <button class="btn btn-outline-secondary" type="submit">Multiply</button>
+          <button class="btn btn-outline-secondary" type="submit">Divide</button>
+        </div>
+        <h4> Resault </h4>
+        <div id="answer" class="col-md-3">
+        </div>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <script>
+      let answer = $('#answer');
+      let url = 'http://localhost:8000/'
+
+      console.log(answer)
+
+      renderResults = function(data){
+        let answer_container = $('#answer');
+        answer_container.empty();
+        let answer = document.createElement('p');
+        answer.innerText = `${data.answer}`;
+        answer_container.append(answer);
+      }
+
+      function onClickAdd(event){          
+        event.preventDefault();        
+        let numA = document.getElementById('numberA').value;
+        let numB = document.getElementById('numberB').value;
+        data = JSON.stringify({'A': numA, 'B': numB});
+        if (event.target.dataset.counter != undefined) { 
+          console.log(event.target.dataset)
+        }  
+        url += 'add/'
+        $.ajax({
+          url: url,
+          method: 'POST',
+          data: data
+        }).done(
+          function (data){
+              renderResults(data);
+          }
+      )  
+      }     
+
+
+      document.querySelector('.parent').addEventListener('click',function(e){
+          if (e.target.classList.contains('myclass')) alert("Я " + e.target.innerText)
+})
+
+
+
+      let but = document.getElementsByClassName('btn');
+
+      add_but.onclick = onClickAdd;         
+             
+    </script>
+  </body>
+</html>
